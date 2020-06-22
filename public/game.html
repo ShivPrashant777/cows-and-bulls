@@ -11,9 +11,16 @@
 		<script defer src="client.js"></script>
 	</head>
 	<body>
-		<form id="form">
-			<input type="number" id="inputNumber" />
+		<form id="secret-number-form">
+			<input type="number" id="secretNumber" />
 			<button type="submit" id="btn">Submit</button>
 		</form>
+		<div class="guesses-container">
+			<form id="guess-form">
+				<input type="number" id="guessNumber" />
+				<button type="submit" id="btn">Submit</button>
+			</form>
+			<ul class="guess-list"></ul>
+		</div>
 	</body>
 </html>

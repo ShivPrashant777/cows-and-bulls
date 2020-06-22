@@ -7,7 +7,7 @@ const joinPlayer = (socketId, playerNumber) => {
 	const player = {
 		id: socketId,
 		playerNumber: playerNumber,
-		move: null,
+		secretNumber: null,
 	};
 	players.push(player);
 	return player;

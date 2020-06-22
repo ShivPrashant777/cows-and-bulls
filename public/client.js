@@ -1,6 +1,9 @@
 const socket = io();
-const form = document.getElementById('form');
-const inputNumber = document.getElementById('inputNumber');
+const secretNumberForm = document.getElementById('secret-number-form');
+const guessesForm = document.getElementById('guesses-form');
+const secretNumber = document.getElementById('secretNumber');
+const guessNumber = document.getElementById('guessNumber');
+const guessList = document.querySelector('.guess-list');
 
 // Force Disconnect User
 socket.on('disconnectUser', function () {
@@ -9,15 +12,34 @@ socket.on('disconnectUser', function () {
 	alert('2 Players Already Connected');
 });
 
-socket.on('getMove', function () {
-	console.log('getMove Called');
-	form.addEventListener('submit', (event) => {
+// Get Player's Secret Number
+socket.on('getSecretNumber', function () {
+	console.log('getSecretNumber Called');
+	secretNumberform.addEventListener('submit', (event) => {
 		event.preventDefault();
-		const move = inputNumber.value;
-		console.log(move);
+		const num = secretNumber.value;
+		console.log(`SecretNumber: ${num}`);
 
 		// Send Move To Server
-		socket.emit('sendMove', { move: move });
-		inputNumber.value = '';
+		socket.emit('sendsecretNumber', { secretNumber: num });
+		secretNumber.value = '';
+	});
+});
+
+// Get Player's Guess
+socket.on('getGuessNumber', function () {
+	console.log('getGuess Called');
+	guessesForm.addEventListener('submit', (event) => {
+		event.preventDefault();
+		var num = guessNumber.value;
+		console.log(`Guess: ${num}`);
+
+		const div = document.createElement('div');
+		div.classList.add('guess');
+		div.innerHTML = `${num}`;
+
+		// Send Move To Server
+		socket.emit('sendguessNumber', { guessNumber: num });
+		guessNumber.value = '';
 	});
 });
