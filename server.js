@@ -36,11 +36,10 @@ io.on('connect', (socket) => {
 			console.log(data.secretNumber);
 			player.secretNumber = data.secretNumber;
 			console.log(players);
+			if (player.secretNumber) {
+				socket.emit('getGuessNumber');
+			}
 		});
-		if (player.secretNumber) {
-			socket.emit('getGuessNumber');
-			//		socket.emit('addToGuessList', { guess: data.guess });
-		}
 	}
 
 	// Disconnect

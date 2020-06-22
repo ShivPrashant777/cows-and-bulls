@@ -1,6 +1,6 @@
 const socket = io();
 const secretNumberForm = document.getElementById('secret-number-form');
-const guessesForm = document.getElementById('guesses-form');
+const guessForm = document.getElementById('guess-form');
 const secretNumber = document.getElementById('secretNumber');
 const guessNumber = document.getElementById('guessNumber');
 const guessList = document.querySelector('.guess-list');
@@ -15,13 +15,13 @@ socket.on('disconnectUser', function () {
 // Get Player's Secret Number
 socket.on('getSecretNumber', function () {
 	console.log('getSecretNumber Called');
-	secretNumberform.addEventListener('submit', (event) => {
+	secretNumberForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 		const num = secretNumber.value;
 		console.log(`SecretNumber: ${num}`);
 
 		// Send Move To Server
-		socket.emit('sendsecretNumber', { secretNumber: num });
+		socket.emit('sendSecretNumber', { secretNumber: num });
 		secretNumber.value = '';
 	});
 });
@@ -29,17 +29,18 @@ socket.on('getSecretNumber', function () {
 // Get Player's Guess
 socket.on('getGuessNumber', function () {
 	console.log('getGuess Called');
-	guessesForm.addEventListener('submit', (event) => {
+	guessForm.addEventListener('submit', (event) => {
 		event.preventDefault();
-		var num = guessNumber.value;
-		console.log(`Guess: ${num}`);
+		const guess = guessNumber.value;
+		console.log(`Guess: ${guess}`);
 
 		const div = document.createElement('div');
 		div.classList.add('guess');
-		div.innerHTML = `${num}`;
+		div.innerHTML = `${guess}`;
+		guessList.appendChild(div);
 
 		// Send Move To Server
-		socket.emit('sendguessNumber', { guessNumber: num });
+		socket.emit('sendguessNumber', { guessNumber: guess });
 		guessNumber.value = '';
 	});
 });
