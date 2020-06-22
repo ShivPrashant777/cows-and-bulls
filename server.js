@@ -31,11 +31,14 @@ io.on('connect', (socket) => {
 		console.log(players);
 
 		// Get Player To Enter Number
-		socket.emit('getMove');
-		socket.on('sendMove', function (data) {
-			console.log(data.move);
-			player.move = data.move;
+		socket.emit('getSecretNumber');
+		socket.on('sendSecretNumber', function (data) {
+			console.log(data.secretNumber);
+			player.secretNumber = data.secretNumber;
 			console.log(players);
+			if (player.secretNumber) {
+				socket.emit('getGuessNumber');
+			}
 		});
 	}
 
@@ -46,7 +49,7 @@ io.on('connect', (socket) => {
 		if (players.length === 1) {
 			var leftPlayer = findRemainingPlayer();
 			leftPlayer.playerNumber = 1;
-			leftPlayer.move = null;
+			leftPlayer.secretNumber = null;
 			console.log('Waiting for Player 2');
 		}
 	});
