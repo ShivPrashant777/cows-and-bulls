@@ -1,9 +1,12 @@
-const socket = io('http://localhost:5000');
+const socket = io();
 const form = document.getElementById('form');
 const inputNumber = document.getElementById('inputNumber');
 
-socket.on('msg', (data) => {
-	console.log(data);
+// Force Disconnect User
+socket.on('disconnectUser', function () {
+	socket.disconnect();
+	window.location.href = '/index.html';
+	alert('2 Players Already Connected');
 });
 
 socket.on('getMove', function () {

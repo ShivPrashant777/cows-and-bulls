@@ -21,4 +21,9 @@ function removePlayer(id) {
 	}
 }
 
-module.exports = { players, joinPlayer, removePlayer };
+// Return Remaining player
+function findRemainingPlayer() {
+	return players[0];
+}
+
+module.exports = { players, joinPlayer, removePlayer, findRemainingPlayer };
