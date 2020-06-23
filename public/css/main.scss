@@ -1,0 +1,43 @@
+.overlay {
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	right: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.753);
+	z-index: 1;
+	display: none;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	color: white;
+
+	.center {
+		display: none;
+		order: 2;
+		width: 20%;
+		margin: 0;
+		text-align: center;
+		color: white;
+
+		h1 {
+			width: 200px;
+			margin: 0 auto;
+		}
+
+		button {
+			width: 180px;
+			padding: 18px;
+			text-align: center;
+			background: white;
+			border: none;
+			border-radius: 5px;
+			color: #dc2e4e;
+			font-weight: 600;
+			word-spacing: 5px;
+			cursor: pointer;
+			margin: 20px 20px 20px 0;
+		}
+	}
+}

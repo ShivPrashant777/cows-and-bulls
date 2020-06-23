@@ -8,6 +8,7 @@ const {
 	joinPlayer,
 	removePlayer,
 	findRemainingPlayer,
+	reset,
 } = require('./data/players');
 
 const { calculateBullsAndCows } = require('./data/gameControl');
@@ -41,11 +42,9 @@ io.on('connect', (socket) => {
 			console.log(players);
 			if (player.secretNumber) {
 				console.log('here');
-				socket
-					.to('game')
-					.emit('getGuessNumber', {
-						secretNumber: data.secretNumber,
-					});
+				socket.to('game').emit('getGuessNumber', {
+					secretNumber: data.secretNumber,
+				});
 			}
 		});
 		socket.on('sendGuessNumber', (data) => {
@@ -67,6 +66,13 @@ io.on('connect', (socket) => {
 			}
 		});
 	}
+
+	// Reset
+	socket.on('reset', function () {
+		console.log('Reset State');
+		reset();
+		io.emit('getSecretNumber');
+	});
 
 	// Disconnect
 	socket.on('disconnect', function () {

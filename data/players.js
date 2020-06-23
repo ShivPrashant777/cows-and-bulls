@@ -26,4 +26,18 @@ function findRemainingPlayer() {
 	return players[0];
 }
 
-module.exports = { players, joinPlayer, removePlayer, findRemainingPlayer };
+// Reset State
+function reset() {
+	for (var player of players) {
+		player.secretNumber = null;
+	}
+	console.log(players);
+}
+
+module.exports = {
+	players,
+	joinPlayer,
+	removePlayer,
+	findRemainingPlayer,
+	reset,
+};
