@@ -42,20 +42,36 @@ socket.on('getSecretNumber', function () {
 
 // Get Player's Guess
 socket.on('getGuessNumber', function (data) {
-	secretNumberForm.style.display = 'none';
-	guessContainer.style.display = 'block';
-	console.log('getGuess Called');
-	guessForm.addEventListener('submit', (event) => {
-		event.preventDefault();
-		const guess = guessNumber.value;
-		console.log(`Guess: ${guess}`);
-		// Send Move To Server
-		socket.emit('sendGuessNumber', {
-			guessNumber: guess,
-			secretNumber: data.secretNumber,
+	if(data.wait == true){
+		console.log('getGuess Called');
+		guessForm.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const guess = guessNumber.value;
+			console.log(`Guess: ${guess}`);
+			// Send Move To Server
+			socket.emit('sendGuessNumber', {
+				guessNumber: guess,
+				secretNumber: data.secretNumber,
+			});
+			guessNumber.value = '';
 		});
-		guessNumber.value = '';
-	});
+	}
+	else{
+		secretNumberForm.style.display = 'none';
+		guessContainer.style.display = 'block';
+		console.log('getGuess Called');
+		guessForm.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const guess = guessNumber.value;
+			console.log(`Guess: ${guess}`);
+			// Send Move To Server
+			socket.emit('sendGuessNumber', {
+				guessNumber: guess,
+				secretNumber: data.secretNumber,
+			});
+			guessNumber.value = '';
+		});
+	}
 });
 
 socket.on('displayResults', (data) => {
@@ -75,3 +91,8 @@ socket.on('gameOver', (data) => {
 playAgain.addEventListener('click', function () {
 	overlay.style.display = 'none';
 });
+
+socket.on('displayGuess', () => {
+	secretNumberForm.style.display = 'none';
+	guessContainer.style.display = 'block';
+})
