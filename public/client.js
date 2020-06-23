@@ -4,11 +4,13 @@ const guessForm = document.getElementById('guess-form');
 const secretNumber = document.getElementById('secretNumber');
 const guessNumber = document.getElementById('guessNumber');
 const guessList = document.querySelector('.guess-list');
+const guessContainer = document.querySelector('.guess-container');
 
 var overlay = document.querySelector('.overlay');
 var winner = document.querySelector('.winner');
 var center = document.querySelector('.center');
 var playAgain = document.querySelector('.center button');
+var waiting = document.querySelector('.waiting');
 
 // Force Disconnect User
 socket.on('disconnectUser', function () {
@@ -17,8 +19,16 @@ socket.on('disconnectUser', function () {
 	alert('2 Players Already Connected');
 });
 
+// Waiting Overlay
+socket.on('wait', function () {
+	overlay.style.display = 'flex';
+	waiting.style.display = 'block';
+});
+
 // Get Player's Secret Number
 socket.on('getSecretNumber', function () {
+	overlay.style.display = 'none';
+	waiting.style.display = 'none';
 	console.log('getSecretNumber Called');
 	secretNumberForm.addEventListener('submit', (event) => {
 		event.preventDefault();
@@ -32,6 +42,8 @@ socket.on('getSecretNumber', function () {
 
 // Get Player's Guess
 socket.on('getGuessNumber', function (data) {
+	secretNumberForm.style.display = 'none';
+	guessContainer.style.display = 'block';
 	console.log('getGuess Called');
 	guessForm.addEventListener('submit', (event) => {
 		event.preventDefault();

@@ -50,4 +50,8 @@
   cursor: pointer;
   margin: 20px 20px 20px 0;
 }
+
+.guess-container {
+  display: none;
+}
 /*# sourceMappingURL=main.css.map */
