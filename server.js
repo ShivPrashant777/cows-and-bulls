@@ -41,7 +41,6 @@ io.on('connect', (socket) => {
 			player.secretNumber = data.secretNumber;
 			console.log(players);
 			if (player.secretNumber) {
-				console.log('here');
 				socket.to('game').emit('getGuessNumber', {
 					secretNumber: data.secretNumber,
 				});
@@ -54,8 +53,6 @@ io.on('connect', (socket) => {
 			);
 			if (x[0] == 4) {
 				io.emit('gameOver', { winner: player.playerNumber });
-				socket.to('game').emit('endGame');
-				socket.disconnect(0);
 
 			} else {
 				socket.emit('displayResults', {
@@ -66,13 +63,6 @@ io.on('connect', (socket) => {
 			}
 		});
 	}
-
-	// Reset
-	socket.on('reset', function () {
-		console.log('Reset State');
-		reset();
-		io.emit('getSecretNumber');
-	});
 
 	// Disconnect
 	socket.on('disconnect', function () {

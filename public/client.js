@@ -61,11 +61,5 @@ socket.on('gameOver', (data) => {
 });
 
 playAgain.addEventListener('click', function () {
-	console.log('button-Pressed');
-	socket.emit('reset');
 	overlay.style.display = 'none';
 });
-
-socket.on('endGame', (data) => {
-	socket.disconnect(0);
-})
