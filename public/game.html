@@ -13,13 +13,13 @@
 	<body>
 		<form id="secret-number-form">
 			<label for="secret">Secret Number</label>
-			<input type="number" id="secretNumber" />
+			<input type="text" pattern="[0-9]{4}" id="secretNumber" />
 			<button type="submit" id="btn">Submit</button>
 		</form>
 		<div class="guesses-container">
 			<form id="guess-form">
 				<label for="guess">Guess</label>
-				<input type="number" id="guessNumber" />
+				<input type="text" pattern="[0-9]{4}" id="guessNumber" />
 				<button type="submit" id="btn">Submit</button>
 			</form>
 			<ul class="guess-list"></ul>

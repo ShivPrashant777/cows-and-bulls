@@ -55,6 +55,9 @@ io.on('connect', (socket) => {
 			);
 			if (x[0] == 4) {
 				io.emit('gameOver', { winner: player.playerNumber });
+				socket.to('game').emit('endGame');
+				socket.disconnect(0);
+
 			} else {
 				socket.emit('displayResults', {
 					guess: data.guessNumber,

@@ -55,3 +55,7 @@ socket.on('gameOver', (data) => {
 	div.innerHTML = `${data.winner} Wins`;
 	guessList.appendChild(div);
 });
+
+socket.on('endGame', (data) => {
+	socket.disconnect(0);
+})
