@@ -41,21 +41,6 @@ socket.on('getGuessNumber', function (data) {
 	});
 });
 
-socket.on('firstGuess', (data) => {
-	console.log('firstGuess Called');
-	guessForm.addEventListener('submit', (event) => {
-		event.preventDefault();
-		const guess = guessNumber.value;
-		console.log(`Guess: ${guess}`);
-		// Send Move To Server
-		socket.emit('sendGuessNumber', {
-			guessNumber: guess,
-			secretNumber: data.secretNumber,
-		});
-		guessNumber.value = '';
-	});
-});
-
 socket.on('displayResults', (data) => {
 	const div = document.createElement('div');
 	div.classList.add('guess');

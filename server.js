@@ -43,7 +43,9 @@ io.on('connect', (socket) => {
 				console.log('here');
 				socket
 					.to('game')
-					.emit('firstGuess', { secretNumber: data.secretNumber });
+					.emit('getGuessNumber', {
+						secretNumber: data.secretNumber,
+					});
 			}
 		});
 		socket.on('sendGuessNumber', (data) => {
