@@ -41,7 +41,7 @@ io.on('connect', (socket) => {
 			console.log(players);
 			if (player.secretNumber) {
 				console.log('here')
-				socket.to('game').emit('firstGuess', {secretNumber: data.secretNumber});
+				socket.to('game').emit('getGuessNumber', {secretNumber: data.secretNumber});
 			}
 		});
 		socket.on('sendGuessNumber', (data) => {
