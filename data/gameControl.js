@@ -13,7 +13,8 @@ function calculateBullsAndCows(secret, guess){
             c++
         }
     })
-    console.log(b)
+    let answer = [b, c-b]
+    return answer;
 }
 
 module.exports = { calculateBullsAndCows }

@@ -10,6 +10,8 @@ const {
 	findRemainingPlayer,
 } = require('./data/players');
 
+const { calculateBullsAndCows } = require('./data/gameControl')
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -29,6 +31,7 @@ io.on('connect', (socket) => {
 		socket.join('game');
 		const player = joinPlayer(socket.id, players.length + 1);
 		console.log(players);
+		console.log(players.length)
 
 		// Get Player To Enter Number
 		socket.emit('getSecretNumber');
@@ -37,9 +40,15 @@ io.on('connect', (socket) => {
 			player.secretNumber = data.secretNumber;
 			console.log(players);
 			if (player.secretNumber) {
-				socket.emit('getGuessNumber');
+				console.log('here')
+				socket.to('game').emit('firstGuess', {secretNumber: data.secretNumber});
 			}
 		});
+		socket.on('sendGuessNumber', (data) => {
+			const x = calculateBullsAndCows(data.secretNumber, data.guessNumber);
+			socket.emit('displayResults', {guess: data.guessNumber, answer: x});
+			socket.emit('getGuessNumber', {secretNumber: data.secretNumber});
+		})
 	}
 
 	// Disconnect

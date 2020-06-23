@@ -19,7 +19,6 @@ socket.on('getSecretNumber', function () {
 		event.preventDefault();
 		const num = secretNumber.value;
 		console.log(`SecretNumber: ${num}`);
-
 		// Send Move To Server
 		socket.emit('sendSecretNumber', { secretNumber: num });
 		secretNumber.value = '';
@@ -27,20 +26,34 @@ socket.on('getSecretNumber', function () {
 });
 
 // Get Player's Guess
-socket.on('getGuessNumber', function () {
+socket.on('getGuessNumber', function (data) {
 	console.log('getGuess Called');
 	guessForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 		const guess = guessNumber.value;
 		console.log(`Guess: ${guess}`);
-
-		const div = document.createElement('div');
-		div.classList.add('guess');
-		div.innerHTML = `${guess}`;
-		guessList.appendChild(div);
-
 		// Send Move To Server
-		socket.emit('sendguessNumber', { guessNumber: guess });
+		socket.emit('sendGuessNumber', { guessNumber: guess, secretNumber: data.secretNumber});
 		guessNumber.value = '';
+
 	});
 });
+
+socket.on('firstGuess', (data) => {
+	console.log("firstGuess Called")
+	guessForm.addEventListener('submit', (event) => {
+		event.preventDefault();
+		const guess = guessNumber.value;
+		console.log(`Guess: ${guess}`);
+		// Send Move To Server
+		socket.emit('sendGuessNumber', { guessNumber: guess, secretNumber: data.secretNumber});
+		guessNumber.value = '';
+	});
+})
+
+socket.on('displayResults', (data) => {
+	const div = document.createElement('div');
+	div.classList.add('guess');
+	div.innerHTML = `${data.guess} ${data.answer[0]} BULL ${data.answer[1]} COW`;
+	guessList.appendChild(div);
+})
