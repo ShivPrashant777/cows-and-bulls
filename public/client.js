@@ -5,6 +5,11 @@ const secretNumber = document.getElementById('secretNumber');
 const guessNumber = document.getElementById('guessNumber');
 const guessList = document.querySelector('.guess-list');
 
+var overlay = document.querySelector('.overlay');
+var winner = document.querySelector('.winner');
+var center = document.querySelector('.center');
+var playAgain = document.querySelector('.center button');
+
 // Force Disconnect User
 socket.on('disconnectUser', function () {
 	socket.disconnect();
@@ -50,8 +55,13 @@ socket.on('displayResults', (data) => {
 });
 
 socket.on('gameOver', (data) => {
-	const div = document.createElement('div');
-	div.classList.add('winner');
-	div.innerHTML = `${data.winner} Wins`;
-	guessList.appendChild(div);
+	overlay.style.display = 'flex';
+	center.style.display = 'block';
+	winner.innerHTML = `Player ${data.winner} Wins`;
+});
+
+playAgain.addEventListener('click', function () {
+	console.log('button-Pressed');
+	socket.emit('reset');
+	overlay.style.display = 'none';
 });
