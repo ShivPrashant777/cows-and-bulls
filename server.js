@@ -46,8 +46,7 @@ io.on('connect', (socket) => {
 		});
 		socket.on('sendGuessNumber', (data) => {
 			const x = calculateBullsAndCows(data.secretNumber, data.guessNumber);
-			socket.emit('displayResults', {guess: data.guessNumber, answer: x});
-			socket.emit('getGuessNumber', {secretNumber: data.secretNumber});
+			socket.emit('displayResults', {guess: data.guessNumber, answer: x, secretNumber: data.secretNumber});
 		})
 	}
 

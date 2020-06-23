@@ -56,4 +56,5 @@ socket.on('displayResults', (data) => {
 	div.classList.add('guess');
 	div.innerHTML = `${data.guess} ${data.answer[0]} BULL ${data.answer[1]} COW`;
 	guessList.appendChild(div);
+	socket.emit('getGuessNumber', {secretNumber: data.secretNumber});
 })
