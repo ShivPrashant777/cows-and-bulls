@@ -33,28 +33,40 @@ socket.on('getGuessNumber', function (data) {
 		const guess = guessNumber.value;
 		console.log(`Guess: ${guess}`);
 		// Send Move To Server
-		socket.emit('sendGuessNumber', { guessNumber: guess, secretNumber: data.secretNumber});
+		socket.emit('sendGuessNumber', {
+			guessNumber: guess,
+			secretNumber: data.secretNumber,
+		});
 		guessNumber.value = '';
-
 	});
 });
 
 socket.on('firstGuess', (data) => {
-	console.log("firstGuess Called")
+	console.log('firstGuess Called');
 	guessForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 		const guess = guessNumber.value;
 		console.log(`Guess: ${guess}`);
 		// Send Move To Server
-		socket.emit('sendGuessNumber', { guessNumber: guess, secretNumber: data.secretNumber});
+		socket.emit('sendGuessNumber', {
+			guessNumber: guess,
+			secretNumber: data.secretNumber,
+		});
 		guessNumber.value = '';
 	});
-})
+});
 
 socket.on('displayResults', (data) => {
 	const div = document.createElement('div');
 	div.classList.add('guess');
 	div.innerHTML = `${data.guess} ${data.answer[0]} BULL ${data.answer[1]} COW`;
 	guessList.appendChild(div);
-	socket.emit('getGuessNumber', {secretNumber: data.secretNumber});
-})
+	socket.emit('getGuessNumber', { secretNumber: data.secretNumber });
+});
+
+socket.on('gameOver', (data) => {
+	const div = document.createElement('div');
+	div.classList.add('winner');
+	div.innerHTML = `${data.winner} Wins`;
+	guessList.appendChild(div);
+});
