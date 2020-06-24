@@ -58,7 +58,6 @@ io.on('connect', (socket) => {
 			socket.broadcast.to('game').emit('getGuessNumber', {
 				secretNumber: data.secretNumber,
 			});
-			socket.emit('displayGuess');
 		}
 	});
 
@@ -87,6 +86,18 @@ io.on('connect', (socket) => {
 			console.log('Waiting for Player 2');
 		}
 	});
+
+	socket.on('playAgain', () => {
+		player.secretNumber = null;
+		var opponent = players.filter((p) => p.id != player.id)[0];
+		opponent.secretNumber = null;
+		console.log(players)
+		io.emit('displaySecret')
+		socket.emit('wait');
+		socket.broadcast.emit('removePlayAgain')
+		io.emit('deleteResults')
+		socket.broadcast.emit('getSecretNumber');
+	})
 });
 
 http.listen('5000', () => {
