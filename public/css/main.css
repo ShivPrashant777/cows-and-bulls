@@ -51,7 +51,120 @@
   margin: 20px 20px 20px 0;
 }
 
-.guess-container {
+.game-box {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr 10fr 1fr;
+      grid-template-rows: 1fr 10fr 1fr;
+  position: relative;
+  margin: 20px auto;
+  min-height: calc(100vh - 40px);
+  max-width: 500px;
+  background: #ecdbdb;
+}
+
+#secret-number-form {
   display: none;
+  -ms-grid-row: 0;
+      grid-row-start: 0;
+  grid-row-start: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#secret-number-form button {
+  border: none;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  width: 15%;
+}
+
+.heading-number {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-grid-row: 0;
+      grid-row-start: 0;
+  grid-row-start: 1;
+  text-align: center;
+  background: blue;
+  color: white;
+  font-size: 2em;
+}
+
+.guess-list {
+  margin: 0;
+  padding: 0 20px;
+  font-size: 1.5em;
+}
+
+.guess-list .guess {
+  padding: 10px;
+  background: green;
+  margin: 5px 0;
+}
+
+#guess-form {
+  display: none;
+  background: gray;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 30px;
+}
+
+#guess-form input {
+  color: white;
+  background: #d30000;
+  border: none;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  width: 85%;
+}
+
+#guess-form input::-webkit-input-placeholder {
+  color: white;
+}
+
+#guess-form input:-ms-input-placeholder {
+  color: white;
+}
+
+#guess-form input::-ms-input-placeholder {
+  color: white;
+}
+
+#guess-form input::placeholder {
+  color: white;
+}
+
+#guess-form button {
+  border: none;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  width: 15%;
 }
 /*# sourceMappingURL=main.css.map */

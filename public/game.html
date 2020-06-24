@@ -21,18 +21,32 @@
 			</div>
 			<div class="waiting">WAITING...</div>
 		</div>
-		<form id="secret-number-form">
-			<label for="secret">Secret Number</label>
-			<input type="text" pattern="[0-9]{4}" id="secretNumber" />
-			<button type="submit" id="btn">Submit</button>
-		</form>
-		<div class="guess-container">
-			<form id="guess-form">
-				<label for="guess">Guess</label>
-				<input type="text" pattern="[0-9]{4}" id="guessNumber" />
-				<button type="submit" id="btn">Submit</button>
+		<div class="game-box">
+			<form id="secret-number-form">
+				<input
+					type="text"
+					pattern="[0-9]{4}"
+					id="secretNumber"
+					placeholder="Type Secret Number Here"
+				/>
+				<button type="submit" id="btn">Send</button>
 			</form>
-			<ul class="guess-list"></ul>
+			<div class="heading-number">Your Number: 1234</div>
+			<ul class="guess-list">
+				<div class="guess">4132: 1 Bull 2 Cows</div>
+				<div class="guess">4132: 1 Bull 2 Cows</div>
+				<div class="guess">4132: 1 Bull 2 Cows</div>
+				<div class="guess">4132: 1 Bull 2 Cows</div>
+			</ul>
+			<form id="guess-form">
+				<input
+					type="text"
+					pattern="[0-9]{4}"
+					id="guessNumber"
+					placeholder="Type Guess Here"
+				/>
+				<button type="submit" id="btn">Guess</button>
+			</form>
 		</div>
 	</body>
 </html>

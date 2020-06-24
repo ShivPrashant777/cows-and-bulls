@@ -4,7 +4,6 @@ const guessForm = document.getElementById('guess-form');
 const secretNumber = document.getElementById('secretNumber');
 const guessNumber = document.getElementById('guessNumber');
 const guessList = document.querySelector('.guess-list');
-const guessContainer = document.querySelector('.guess-container');
 
 var overlay = document.querySelector('.overlay');
 var winner = document.querySelector('.winner');
@@ -43,7 +42,7 @@ socket.on('getSecretNumber', function () {
 // Get Player's Guess
 socket.on('getGuessNumber', function (data) {
 	secretNumberForm.style.display = 'none';
-	guessContainer.style.display = 'block';
+	guessForm.style.display = 'flex';
 	console.log('getGuess Called');
 	guessForm.addEventListener('submit', (event) => {
 		event.preventDefault();
