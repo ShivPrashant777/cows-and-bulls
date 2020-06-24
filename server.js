@@ -51,12 +51,11 @@ io.on('connect', (socket) => {
 		var opponent = players.filter((p) => p.id != player.id)[0];
 		if (!opponent.secretNumber) {
 			socket.broadcast.to('game').emit('getSecretNumber');
-			socket.to('game').emit('getGuessNumber', {
-				secretNumber: data.secretNumber,
-				wait: true
-			})
 		} else {
-			socket.to('game').emit('getGuessNumber', {
+			socket.emit('getGuessNumber', {
+				secretNumber: opponent.secretNumber,
+			});
+			socket.broadcast.to('game').emit('getGuessNumber', {
 				secretNumber: data.secretNumber,
 			});
 			socket.emit('displayGuess');
