@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 body {
   font-family: 'Roboto', sans-serif;
+  background: #171b1f;
+  color: white;
 }
 
 .overlay {
@@ -66,9 +68,9 @@ body {
   margin: 20px auto;
   min-height: calc(100vh - 40px);
   max-width: 500px;
-  background: #ecdbdb;
-  -webkit-box-shadow: 0 1px 20px 1px #d8818146;
-          box-shadow: 0 1px 20px 1px #d8818146;
+  background: #0e0814;
+  -webkit-box-shadow: 0 1px 20px 1px #00000067;
+          box-shadow: 0 1px 20px 1px #00000067;
 }
 
 #secret-number-form {
@@ -88,7 +90,7 @@ body {
 
 #secret-number-form input {
   color: white;
-  background: #d88181;
+  background: #190e23;
   border: none;
   width: 55%;
   height: 30px;
@@ -133,7 +135,7 @@ body {
       grid-row-start: 0;
   grid-row-start: 1;
   text-align: center;
-  background: #d88181;
+  background: #190e23;
   color: white;
   font-size: 2em;
 }
@@ -148,13 +150,13 @@ body {
 
 .guess-list .guess {
   padding: 10px;
-  background: #ca899a;
+  background: #39244d;
   margin: 5px 0;
   border-radius: 3px;
 }
 
 .guess-list .guess:nth-child(even) {
-  background: #f08ba6;
+  background: #241235;
 }
 
 #guess-form {
@@ -172,7 +174,7 @@ body {
 
 #guess-form input {
   color: white;
-  background: #d88181;
+  background: #190e23;
   border: none;
   position: absolute;
   bottom: 0;
