@@ -12,6 +12,7 @@ var playAgain = document.querySelector('.center button');
 var waiting = document.querySelector('.waiting');
 var headingNumber = document.querySelector('.heading-number');
 var waitMsg = document.querySelector('.waitMsg');
+var rules = document.querySelector('.rules');
 
 // Force Disconnect User
 socket.on('disconnectUser', function () {
@@ -55,6 +56,7 @@ socket.on('getGuessNumber', function (data) {
 		secretNumberForm.removeEventListener('submit', trial);
 		guessForm.removeEventListener('submit', trial1);
 	});
+	rules.style.display = 'none';
 	secretNumberForm.style.display = 'none';
 	guessForm.style.display = 'flex';
 	headingNumber.style.display = 'flex';
