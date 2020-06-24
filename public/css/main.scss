@@ -57,6 +57,7 @@ body {
 	position: relative;
 	margin: 20px auto;
 	min-height: calc(100vh - 40px);
+	height: 500px;
 	max-width: 500px;
 	background: #0e0814;
 	box-shadow: 0 1px 20px 1px #00000067;
@@ -113,6 +114,11 @@ body {
 	padding: 0 20px;
 	font-size: 1.5em;
 	color: white;
+	overflow-y: scroll;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 
 	.guess {
 		padding: 10px;
@@ -122,6 +128,10 @@ body {
 	}
 	.guess:nth-child(even) {
 		background: #241235;
+	}
+
+	.guess:last-child {
+		background: red;
 	}
 }
 

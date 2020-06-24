@@ -67,7 +67,10 @@ io.on('connect', (socket) => {
 	socket.on('sendGuessNumber', (data) => {
 		const x = calculateBullsAndCows(data.secretNumber, data.guessNumber);
 		if (x[0] == 4) {
-			io.emit('gameOver', { winner: player.playerNumber });
+			socket.emit('gameOver', { winner: 'You' });
+			socket.broadcast
+				.to('game')
+				.emit('gameOver', { winner: 'Opponent' });
 		} else {
 			socket.emit('displayResults', {
 				guess: data.guessNumber,

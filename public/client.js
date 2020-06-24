@@ -27,6 +27,11 @@ socket.on('wait', function () {
 	waiting.style.display = 'block';
 });
 
+// Auto Scroll
+function autoScrollDown() {
+	guessList.scrollTop = guessList.scrollHeight;
+}
+
 var trial = function (event) {
 	event.preventDefault();
 	const num = secretNumber.value;
@@ -52,7 +57,12 @@ socket.on('getGuessNumber', function (data) {
 	socket.on('gameOver', (data) => {
 		overlay.style.display = 'flex';
 		center.style.display = 'block';
-		winner.innerHTML = `Player ${data.winner} Wins`;
+		if (data.winner == 'You') {
+			winMsg = 'You Win! Congratulations';
+		} else {
+			winMsg = 'You Lose! Opponent Guessed First';
+		}
+		winner.innerHTML = winMsg;
 		secretNumberForm.removeEventListener('submit', trial);
 		guessForm.removeEventListener('submit', trial1);
 	});
@@ -82,6 +92,7 @@ socket.on('displayResults', (data) => {
 	div.classList.add('guess');
 	div.innerHTML = `${data.guess} ${data.answer[0]} BULL ${data.answer[1]} COW`;
 	guessList.appendChild(div);
+	autoScrollDown();
 	socket.emit('getGuessNumber', { secretNumber: data.secretNumber });
 });
 
