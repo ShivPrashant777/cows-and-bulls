@@ -32,10 +32,12 @@ socket.on('getSecretNumber', function () {
 	secretNumberForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 		const num = secretNumber.value;
-		console.log(`SecretNumber: ${num}`);
-		// Send Move To Server
-		socket.emit('sendSecretNumber', { secretNumber: num });
-		secretNumber.value = '';
+		if(num != ''){
+			console.log(`SecretNumber: ${num}`);
+			// Send Move To Server
+			socket.emit('sendSecretNumber', { secretNumber: num });
+			secretNumber.value = '';
+		}
 	});
 });
 
@@ -47,13 +49,15 @@ socket.on('getGuessNumber', function (data) {
 	guessForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 		const guess = guessNumber.value;
-		console.log(`Guess: ${guess}`);
-		// Send Move To Server
-		socket.emit('sendGuessNumber', {
-			guessNumber: guess,
-			secretNumber: data.secretNumber,
-		});
-		guessNumber.value = '';
+		if(guess != ''){
+			console.log(`Guess: ${guess}`);
+			// Send Move To Server
+			socket.emit('sendGuessNumber', {
+				guessNumber: guess,
+				secretNumber: data.secretNumber,
+			});
+			guessNumber.value = '';
+		}
 	});
 });
 
@@ -65,17 +69,32 @@ socket.on('displayResults', (data) => {
 	socket.emit('getGuessNumber', { secretNumber: data.secretNumber });
 });
 
+socket.on('deleteResults', () => {
+	let len = guessList.childNodes.length
+	for(let i = len - 1; i >= 0 ; i--){
+		guessList.removeChild(guessList.childNodes[i])
+	}
+})
+
 socket.on('gameOver', (data) => {
 	overlay.style.display = 'flex';
 	center.style.display = 'block';
 	winner.innerHTML = `Player ${data.winner} Wins`;
 });
 
-playAgain.addEventListener('click', function () {
+playAgain.addEventListener('click', function (e) {
+	e.preventDefault();
 	overlay.style.display = 'none';
+	center.style.display = 'none';
+	socket.emit('playAgain');
 });
 
-socket.on('displayGuess', () => {
-	secretNumberForm.style.display = 'none';
-	guessContainer.style.display = 'block';
-});
+socket.on('displaySecret', () => {
+	secretNumberForm.style.display = 'block';
+	guessContainer.style.display = 'none';
+})
+
+socket.on('removePlayAgain', () => {
+	overlay.style.display = 'none';
+	center.style.display = 'none';
+})
