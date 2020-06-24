@@ -11,6 +11,7 @@ var center = document.querySelector('.center');
 var playAgain = document.querySelector('.center button');
 var waiting = document.querySelector('.waiting');
 var headingNumber = document.querySelector('.heading-number');
+var waitMsg = document.querySelector('.waitMsg')
 
 // Force Disconnect User
 socket.on('disconnectUser', function () {
@@ -25,30 +26,40 @@ socket.on('wait', function () {
 	waiting.style.display = 'block';
 });
 
+var trial = function(event) {
+	event.preventDefault();
+	const num = secretNumber.value;
+	if (num != '') {
+		console.log(`SecretNumber: ${num}`);
+		// Send Move To Server
+		socket.emit('sendSecretNumber', { secretNumber: num });
+		secretNumber.value = '';
+		headingNumber.innerHTML = `Your number is ${num}`
+	}
+}
+
 // Get Player's Secret Number
 socket.on('getSecretNumber', function () {
 	overlay.style.display = 'none';
 	waiting.style.display = 'none';
 	console.log('getSecretNumber Called');
-	secretNumberForm.addEventListener('submit', (event) => {
-		event.preventDefault();
-		const num = secretNumber.value;
-		if (num != '') {
-			console.log(`SecretNumber: ${num}`);
-			// Send Move To Server
-			socket.emit('sendSecretNumber', { secretNumber: num });
-			secretNumber.value = '';
-		}
-	});
+	secretNumberForm.addEventListener('submit', trial);
 });
 
 // Get Player's Guess
 socket.on('getGuessNumber', function (data) {
+	socket.on('gameOver', (data) => {
+		overlay.style.display = 'flex';
+		center.style.display = 'block';
+		winner.innerHTML = `Player ${data.winner} Wins`;
+		secretNumberForm.removeEventListener('submit', trial)
+		guessForm.removeEventListener('submit', trial1)
+	});
 	secretNumberForm.style.display = 'none';
 	guessForm.style.display = 'flex';
 	headingNumber.style.display = 'flex';
 	console.log('getGuess Called');
-	guessForm.addEventListener('submit', (event) => {
+	var trial1 = function(event){
 		event.preventDefault();
 		const guess = guessNumber.value;
 		if (guess != '') {
@@ -60,7 +71,8 @@ socket.on('getGuessNumber', function (data) {
 			});
 			guessNumber.value = '';
 		}
-	});
+	}
+	guessForm.addEventListener('submit', trial1);
 });
 
 socket.on('displayResults', (data) => {
@@ -76,12 +88,6 @@ socket.on('deleteResults', () => {
 	for (let i = len - 1; i >= 0; i--) {
 		guessList.removeChild(guessList.childNodes[i]);
 	}
-});
-
-socket.on('gameOver', (data) => {
-	overlay.style.display = 'flex';
-	center.style.display = 'block';
-	winner.innerHTML = `Player ${data.winner} Wins`;
 });
 
 playAgain.addEventListener('click', function (e) {
@@ -101,3 +107,11 @@ socket.on('removePlayAgain', () => {
 	overlay.style.display = 'none';
 	center.style.display = 'none';
 });
+
+socket.on('waitMsg', () => {
+	waitMsg.innerHTML = 'Waiting for player 2 to enter secret code'
+})
+
+socket.on('dltWaitMsg', () => {
+	waitMsg.innerHTML = null;
+})
