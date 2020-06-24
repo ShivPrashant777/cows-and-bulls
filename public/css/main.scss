@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
 .overlay {
 	position: absolute;
 	bottom: 0;
@@ -43,6 +49,7 @@
 }
 
 .game-box {
+	border-radius: 7px;
 	display: grid;
 	grid-template-rows: 1fr 10fr 1fr;
 	position: relative;
@@ -50,26 +57,37 @@
 	min-height: calc(100vh - 40px);
 	max-width: 500px;
 	background: #ecdbdb;
+	box-shadow: 0 1px 20px 1px #d8818146;
 }
 
 #secret-number-form {
-	display: none;
 	grid-row-start: 0;
 	grid-row-start: 1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
+	input {
+		color: white;
+		background: #d88181;
+		border: none;
+		width: 55%;
+		height: 30px;
+
+		&::placeholder {
+			color: white;
+		}
+	}
+
 	button {
 		border: none;
-		bottom: 0;
-		top: 0;
-		right: 0;
 		width: 15%;
+		height: 30px;
 	}
 }
 
 .heading-number {
+	border-radius: 7px 7px 0 0;
 	display: none;
 	flex-direction: column;
 	justify-content: center;
@@ -77,21 +95,26 @@
 	grid-row-start: 0;
 	grid-row-start: 1;
 	text-align: center;
-	background: blue;
+	background: #d88181;
 	color: white;
 	font-size: 2em;
 }
 
 .guess-list {
 	margin: 0;
+	margin-top: 10px;
 	padding: 0 20px;
 	font-size: 1.5em;
+	color: white;
 
 	.guess {
 		padding: 10px;
-		background: green;
-
+		background: #ca899a;
 		margin: 5px 0;
+		border-radius: 3px;
+	}
+	.guess:nth-child(even) {
+		background: #f08ba6;
 	}
 }
 
@@ -106,7 +129,7 @@
 
 	input {
 		color: white;
-		background: #d30000;
+		background: #d88181;
 		border: none;
 		position: absolute;
 		bottom: 0;

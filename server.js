@@ -88,16 +88,14 @@ io.on('connect', (socket) => {
 	});
 
 	socket.on('playAgain', () => {
-		player.secretNumber = null;
-		var opponent = players.filter((p) => p.id != player.id)[0];
-		opponent.secretNumber = null;
-		console.log(players)
-		io.emit('displaySecret')
+		reset();
+		console.log(players);
+		io.emit('displaySecret');
 		socket.emit('wait');
-		socket.broadcast.emit('removePlayAgain')
-		io.emit('deleteResults')
+		socket.broadcast.emit('removePlayAgain');
+		io.emit('deleteResults');
 		socket.broadcast.emit('getSecretNumber');
-	})
+	});
 });
 
 http.listen('5000', () => {
