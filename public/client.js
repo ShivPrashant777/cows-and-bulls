@@ -109,6 +109,8 @@ socket.on('removePlayAgain', () => {
 });
 
 socket.on('waitMsg', () => {
+	secretNumberForm.style.display = 'none';
+	waitMsg.style.display = 'flex';
 	waitMsg.innerHTML = 'Waiting for player 2 to enter secret code';
 });
 

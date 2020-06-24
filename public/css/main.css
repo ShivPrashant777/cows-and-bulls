@@ -118,7 +118,8 @@ body {
   height: 30px;
 }
 
-.heading-number {
+.heading-number,
+.waitMsg {
   border-radius: 7px 7px 0 0;
   display: none;
   -webkit-box-orient: vertical;
@@ -138,6 +139,10 @@ body {
   background: #190e23;
   color: white;
   font-size: 2em;
+}
+
+.waitMsg {
+  font-size: 1em;
 }
 
 .guess-list {
