@@ -10,6 +10,7 @@ var winner = document.querySelector('.winner');
 var center = document.querySelector('.center');
 var playAgain = document.querySelector('.center button');
 var waiting = document.querySelector('.waiting');
+var headingNumber = document.querySelector('.heading-number');
 
 // Force Disconnect User
 socket.on('disconnectUser', function () {
@@ -32,7 +33,7 @@ socket.on('getSecretNumber', function () {
 	secretNumberForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 		const num = secretNumber.value;
-		if(num != ''){
+		if (num != '') {
 			console.log(`SecretNumber: ${num}`);
 			// Send Move To Server
 			socket.emit('sendSecretNumber', { secretNumber: num });
@@ -45,11 +46,12 @@ socket.on('getSecretNumber', function () {
 socket.on('getGuessNumber', function (data) {
 	secretNumberForm.style.display = 'none';
 	guessForm.style.display = 'flex';
+	headingNumber.style.display = 'flex';
 	console.log('getGuess Called');
 	guessForm.addEventListener('submit', (event) => {
 		event.preventDefault();
 		const guess = guessNumber.value;
-		if(guess != ''){
+		if (guess != '') {
 			console.log(`Guess: ${guess}`);
 			// Send Move To Server
 			socket.emit('sendGuessNumber', {
@@ -70,11 +72,11 @@ socket.on('displayResults', (data) => {
 });
 
 socket.on('deleteResults', () => {
-	let len = guessList.childNodes.length
-	for(let i = len - 1; i >= 0 ; i--){
-		guessList.removeChild(guessList.childNodes[i])
+	let len = guessList.childNodes.length;
+	for (let i = len - 1; i >= 0; i--) {
+		guessList.removeChild(guessList.childNodes[i]);
 	}
-})
+});
 
 socket.on('gameOver', (data) => {
 	overlay.style.display = 'flex';
@@ -90,11 +92,12 @@ playAgain.addEventListener('click', function (e) {
 });
 
 socket.on('displaySecret', () => {
-	secretNumberForm.style.display = 'block';
-	guessContainer.style.display = 'none';
-})
+	secretNumberForm.style.display = 'flex';
+	headingNumber.style.display = 'none';
+	guessForm.style.display = 'none';
+});
 
 socket.on('removePlayAgain', () => {
 	overlay.style.display = 'none';
 	center.style.display = 'none';
-})
+});
