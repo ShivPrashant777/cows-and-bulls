@@ -50,8 +50,10 @@ io.on('connect', (socket) => {
 		console.log(players);
 		var opponent = players.filter((p) => p.id != player.id)[0];
 		if (!opponent.secretNumber) {
+			socket.emit('waitMsg')
 			socket.broadcast.to('game').emit('getSecretNumber');
 		} else {
+			socket.broadcast.emit('dltWaitMsg')
 			socket.emit('getGuessNumber', {
 				secretNumber: opponent.secretNumber,
 			});
