@@ -8,6 +8,7 @@ const joinPlayer = (socketId, playerNumber) => {
 		id: socketId,
 		playerNumber: playerNumber,
 		secretNumber: null,
+		room: null,
 	};
 	players.push(player);
 	return player;
@@ -27,11 +28,29 @@ function findRemainingPlayer() {
 }
 
 // Reset State
-function reset() {
-	for (var player of players) {
-		player.secretNumber = null;
+function reset(room) {
+	for(let i = 0; i < players.length; i++){
+		if(players[i].room = room){
+			players[i].secretNumber = null;
+		}
 	}
 	console.log(players);
+}
+
+function opponent(player){
+	let c = 0;
+	let opp = null;
+	for(let i = 0; i < players.length; i++){
+		if(players[i].room == player.room){
+			if(players[i] != player){
+				opp = players[i];
+			}
+			else{
+				continue;
+			}
+		}
+	}
+	return opp;
 }
 
 module.exports = {
@@ -40,4 +59,5 @@ module.exports = {
 	removePlayer,
 	findRemainingPlayer,
 	reset,
+	opponent,
 };

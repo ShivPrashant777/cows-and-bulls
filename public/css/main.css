@@ -28,6 +28,10 @@ body {
   color: white;
 }
 
+.overlay .waiting{
+  display: none;
+}
+
 .overlay .center {
   display: none;
   -webkit-box-ordinal-group: 3;
@@ -144,6 +148,10 @@ body {
 
 .waitMsg {
   font-size: 1em;
+}
+
+.roomMsg {
+  display: none;
 }
 
 .guess-list {

@@ -9,6 +9,7 @@ const {
 	removePlayer,
 	findRemainingPlayer,
 	reset,
+	opponent,
 } = require('./data/players');
 
 const { calculateBullsAndCows } = require('./data/gameControl');
@@ -24,41 +25,36 @@ app.get('/game', (req, res) => {
 });
 
 io.on('connect', (socket) => {
-	// If 2 players in the room then disconnect
-	if (players.length >= 2) {
-		socket.emit('disconnectUser');
-	}
-	// Join Room
-	socket.join('game');
+	// Create New Player
 	const player = joinPlayer(socket.id, players.length + 1);
 	console.log(players);
 	console.log(players.length);
 
-	if (players.length < 2) {
-		socket.emit('wait');
-	}
+	//Get Room Name
+	socket.emit('getRoomName');
 
 	// Get Player To Enter SecretNumber
-	if (players.length === 2) {
-		socket.broadcast.to('game').emit('getSecretNumber');
-		socket.emit('wait');
-	}
+	// if (players.length === 2) {
+	// 	socket.broadcast.to('game').emit('getSecretNumber');
+	// 	socket.emit('wait');
+	// }
 
 	// Add secret nummber to player object
 	socket.on('sendSecretNumber', function (data) {
 		player.secretNumber = data.secretNumber;
-		console.log(players);
-		var opponent = players.filter((p) => p.id != player.id)[0];
-		if (!opponent.secretNumber) {
+		var opp = opponent(player)
+		if (!opp.secretNumber) {
 			socket.emit('waitMsg');
-			socket.broadcast.to('game').emit('getSecretNumber');
+			socket.broadcast.to(data.room).emit('getSecretNumber', {room : data.room});
 		} else {
-			socket.broadcast.emit('dltWaitMsg');
+			socket.broadcast.to(data.room).emit('dltWaitMsg');
 			socket.emit('getGuessNumber', {
-				secretNumber: opponent.secretNumber,
+				secretNumber: opp.secretNumber,
+				room : data.room,
 			});
-			socket.broadcast.to('game').emit('getGuessNumber', {
+			socket.broadcast.to(data.room).emit('getGuessNumber', {
 				secretNumber: data.secretNumber,
+				room : data.room,
 			});
 		}
 	});
@@ -67,15 +63,16 @@ io.on('connect', (socket) => {
 	socket.on('sendGuessNumber', (data) => {
 		const x = calculateBullsAndCows(data.secretNumber, data.guessNumber);
 		if (x[0] == 4) {
-			socket.emit('gameOver', { winner: 'You' });
-			socket.broadcast
-				.to('game')
-				.emit('gameOver', { winner: 'Opponent' });
+			socket.emit('gameOver', { winner: 'You', room : data.room });
+			socket.broadcast.to(data.room).emit('gameOver', { winner: 'Opponent', room : data.room });
+			io.in(data.room).emit('removeGuess');
+			io.in(data.room).emit('removeSecret');
 		} else {
 			socket.emit('displayResults', {
 				guess: data.guessNumber,
 				answer: x,
 				secretNumber: data.secretNumber,
+				room : data.room
 			});
 		}
 	});
@@ -92,15 +89,45 @@ io.on('connect', (socket) => {
 		}
 	});
 
-	socket.on('playAgain', () => {
-		reset();
-		console.log(players);
-		io.emit('displaySecret');
+	socket.on('playAgain', (data) => {
+		socket.emit('removeAgainEvent')
+		socket.to(data.room).emit('removeAgainEvent')
+		player.secretNumber = null;
+		var opp = opponent(player)
+		opp.secretNumber = null;
+		io.in(data.room).emit('displaySecret');
 		socket.emit('wait');
-		socket.broadcast.emit('removePlayAgain');
-		io.emit('deleteResults');
-		socket.broadcast.emit('getSecretNumber');
+		socket.broadcast.to(data.room).emit('removePlayAgain');
+		io.in(data.room).emit('deleteResults');
+		socket.broadcast.to(data.room).emit('getSecretNumber', {room : data.room});
 	});
+
+	socket.on('sendRoomName', (data) => {
+		player.room = data.room
+		let c = 0;
+		for(let i = 0; i < players.length; i++){
+			if(players[i].room == data.room){
+				c++;
+			}
+		}
+		if(c > 2){
+			player.room = null;
+			console.log('room full');
+			socket.emit('roomAgain');
+			socket.emit('getRoomName');
+		}
+		else if(c == 2){
+			socket.join(data.room);
+			socket.emit('dltRoomForm');
+			socket.emit('wait')
+			socket.broadcast.to(data.room).emit('getSecretNumber', {room : data.room});
+		}
+		else{
+			socket.join(data.room);
+			socket.emit('dltRoomForm');
+			socket.emit('wait');
+		}
+	})
 });
 
 http.listen('5000', () => {
