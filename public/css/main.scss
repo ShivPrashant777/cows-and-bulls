@@ -6,6 +6,30 @@ body {
 	color: white;
 }
 
+form.center {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.join-btn {
+		font-size: 1.5em;
+		width: 180px;
+		padding: 18px;
+		text-align: center;
+		background: white;
+		border: none;
+		border-radius: 5px;
+		color: #dc2e4e;
+		word-spacing: 5px;
+		cursor: pointer;
+
+		&:hover {
+			background: #dc2e4e;
+			color: white;
+		}
+	}
+}
+
 .overlay {
 	position: absolute;
 	bottom: 0;
@@ -20,6 +44,10 @@ body {
 	justify-content: center;
 	text-align: center;
 	color: white;
+
+	.waiting {
+		display: none;
+	}
 
 	.center {
 		display: none;
@@ -166,4 +194,10 @@ body {
 		right: 0;
 		width: 15%;
 	}
+}
+
+.roomMsg {
+	position: absolute;
+	top: 10px;
+	font-weight: bold;
 }
