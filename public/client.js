@@ -46,7 +46,10 @@ socket.on('getSecretNumber', function (data) {
 		if (num != '') {
 			console.log(`SecretNumber: ${num}`);
 			// Send Move To Server
-			socket.emit('sendSecretNumber', { secretNumber: num, room: data.room });
+			socket.emit('sendSecretNumber', {
+				secretNumber: num,
+				room: data.room,
+			});
 			secretNumber.value = '';
 			headingNumber.innerHTML = `Your number is ${num}`;
 		}
@@ -64,7 +67,7 @@ socket.on('getGuessNumber', function (data) {
 	guessForm.style.display = 'flex';
 	headingNumber.style.display = 'flex';
 	roomMsg.style.display = 'flex';
-	roomMsg.innerHTML = data.room;
+	roomMsg.innerHTML = `Room: ${data.room}`;
 	console.log('getGuess Called');
 	var trial1 = function (event) {
 		event.preventDefault();
@@ -75,7 +78,7 @@ socket.on('getGuessNumber', function (data) {
 			socket.emit('sendGuessNumber', {
 				guessNumber: guess,
 				secretNumber: data.secretNumber,
-				room : data.room,
+				room: data.room,
 			});
 			guessNumber.value = '';
 		}
@@ -92,7 +95,10 @@ socket.on('displayResults', (data) => {
 	div.innerHTML = `${data.guess} ${data.answer[0]} BULL ${data.answer[1]} COW`;
 	guessList.appendChild(div);
 	autoScrollDown();
-	socket.emit('getGuessNumber', { secretNumber: data.secretNumber, room : data.room });
+	socket.emit('getGuessNumber', {
+		secretNumber: data.secretNumber,
+		room: data.room,
+	});
 });
 
 socket.on('deleteResults', () => {
@@ -132,28 +138,28 @@ socket.on('gameOver', (data) => {
 		winMsg = 'You Lose! Opponent Guessed First';
 	}
 	winner.innerHTML = winMsg;
-	var again =  function (e) {
+	var again = function (e) {
 		e.preventDefault();
 		overlay.style.display = 'none';
 		center.style.display = 'none';
-		socket.emit('playAgain', {room : data.room});
-	}
+		socket.emit('playAgain', { room: data.room });
+	};
 	playAgain.addEventListener('click', again);
 	socket.on('removeAgainEvent', () => {
-		playAgain.removeEventListener('click', again)
-	})
+		playAgain.removeEventListener('click', again);
+	});
 });
 
 socket.on('getRoomName', () => {
 	overlay.style.display = 'flex';
 	roomForm.style.display = 'flex';
-	var get = function(event){
+	var get = function (event) {
 		event.preventDefault();
-		const room = roomName.value
+		const room = roomName.value;
 		console.log(room);
-		socket.emit('sendRoomName', {room : room});
+		socket.emit('sendRoomName', { room: room });
 		roomName.value = '';
-	}
+	};
 	roomForm.addEventListener('submit', get);
 	socket.on('roomAgain', () => {
 		roomForm.removeEventListener('submit', get);
@@ -163,4 +169,4 @@ socket.on('getRoomName', () => {
 socket.on('dltRoomForm', () => {
 	overlay.style.display = 'none';
 	roomForm.style.display = 'none';
-})
+});

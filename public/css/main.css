@@ -5,6 +5,37 @@ body {
   color: white;
 }
 
+form.center {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form.center .join-btn {
+  font-size: 1.5em;
+  width: 180px;
+  padding: 18px;
+  text-align: center;
+  background: white;
+  border: none;
+  border-radius: 5px;
+  color: #dc2e4e;
+  word-spacing: 5px;
+  cursor: pointer;
+}
+
+form.center .join-btn:hover {
+  background: #dc2e4e;
+  color: white;
+}
+
 .overlay {
   position: absolute;
   bottom: 0;
@@ -28,7 +59,7 @@ body {
   color: white;
 }
 
-.overlay .waiting{
+.overlay .waiting {
   display: none;
 }
 
@@ -150,10 +181,6 @@ body {
   font-size: 1em;
 }
 
-.roomMsg {
-  display: none;
-}
-
 .guess-list {
   margin: 0;
   margin-top: 10px;
@@ -228,5 +255,11 @@ body {
   top: 0;
   right: 0;
   width: 15%;
+}
+
+.roomMsg {
+  position: absolute;
+  top: 10px;
+  font-weight: bold;
 }
 /*# sourceMappingURL=main.css.map */
