@@ -5,10 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Bulls and Cows</title>
 		<link rel="stylesheet" href="css/main.css" />
-		<script
-			defer
-			src="/socket.io/socket.io.js"
-		></script>
+		<script defer src="/socket.io/socket.io.js"></script>
 		<script defer src="client.js"></script>
 	</head>
 	<body>
@@ -29,7 +26,7 @@
 			<div class="waiting">WAITING FOR OTHER PLAYER...</div>
 		</div>
 		<div class="game-box">
-			<form id="secret-number-form" class="center">
+			<form id="secret-number-form">
 				<input
 					type="text"
 					pattern="^(?!.*(.).*\1)\d{4}$"
