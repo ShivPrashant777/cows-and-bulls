@@ -19,8 +19,8 @@
   "homepage": "https://github.com/ShivPrashant777/cows-and-bulls#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "socket.io": "^2.3.0",
-    "xmlhttprequest-ssl": ">=1.6.2"
+    "xmlhttprequest-ssl": ">=1.6.2",
+    "socket.io": "^2.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
