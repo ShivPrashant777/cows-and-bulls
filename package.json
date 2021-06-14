@@ -20,7 +20,10 @@
   "dependencies": {
     "express": "^4.17.1",
     "xmlhttprequest-ssl": ">=1.6.2",
-    "socket.io": "^2.4.0"
+    "socket.io": "^2.4.0",
+    "ws": ">=7.4.6",
+    "normalize-url": ">=4.5.1",
+    "glob-parent": ">=5.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
